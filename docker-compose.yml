@@ -1,0 +1,64 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: lms-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: lms_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - lms-network
+
+  redis:
+    image: redis:7
+    container_name: lms-redis
+    networks:
+      - lms-network
+
+  backend:
+    build:
+      context: ./backend
+    container_name: lms-backend
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/lms_db
+      SECRET_KEY: mysecretkey
+      ALGORITHM: HS256
+      REDIS_URL: redis://redis:6379/0
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - lms-network
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: lms-frontend
+    depends_on:
+      - backend
+    networks:
+      - lms-network
+
+  nginx:
+    image: nginx:alpine
+    container_name: lms-nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - frontend
+      - backend
+    networks:
+      - lms-network
+
+volumes:
+  postgres_data:
+
+networks:
+  lms-network:
+    driver: bridge
