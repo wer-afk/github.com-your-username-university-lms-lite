@@ -1,0 +1,16 @@
+GitHub Repository:
+https://github.com/wer-afk/github.com-your-username-university-lms-lite
+
+Deployed Application:
+http://161.35.22.223
+
+Swagger API Documentation:
+http://161.35.22.223/docs
+
+Team Members:
+1. Sultanov Ernazar U2310260 — Member 1 — Database models and seed data
+2. Shirinova Diyora U2310248 — Member 2 — Authentication, users, and rate limiter
+3. Abirova Sarviniso U2310019 — Member 3 — Courses and assignments API
+4. Zaynutdinov Javohir U2310303 — Member 4 — Submissions, grading, and grade export
+5. Valiyeva Sabina U2310276 — Member 5 — Redis cache and WebSocket chat
+6. Inoyatov Sherzod U2310099 — Member 6 / Team Lead — Integration, deployment, Docker/Nginx, documentation
